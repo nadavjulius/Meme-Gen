@@ -10,8 +10,8 @@
 
 <body onload="onInit()">
 
-    <header class="main-head">
-        <h1 class="logo">Logo</h1>
+    <header class="main-head flex wrap">
+        <img src="img/logo/logo.png" alt="" class="logo">
     </header>
 
 
@@ -24,9 +24,9 @@
         <section class="editor-modal-container flex wrap">
 
             <div class="canvas-container flex wrap">
-
-                <canvas height="500" width="500" class="meme-content" id="meme-content"></canvas>
-
+                <canvas class="meme-content" id="meme-content"></canvas>
+            </div>
+            
                 <section class="editing-controls grid">
                     <input title="Choose A Color" type="color" name="color" id="txt-color" value="#ffffff"
                         onchange="onTxtColor()">
@@ -34,11 +34,11 @@
                         onchange="onTxtBorderColor()">
                     <input type="text" name="text" id="meme-text" placeholder="type words human"
                         onkeyup="onTextTyped()">
-                        <select onchange="onFontFamily()" name="fonts" class="fonts">
-                            <option value="impact">Impact</option>
-                            <option value="monospace">Monospace</option>
-                            <option value="serif">Serif</option>
-                        </select>
+                    <select onchange="onFontFamily()" name="fonts" class="fonts">
+                        <option value="impact">Impact</option>
+                        <option value="monospace">Monospace</option>
+                        <option value="serif">Serif</option>
+                    </select>
                     <button title="Enlarge Text Size" class="text-size-up" onclick="handleFontSize(+1)">A+</button>
                     <button title="Decresse Text Size" class="text-size-down" onclick="handleFontSize(-1)">
                         A-</button>
@@ -56,12 +56,12 @@
                         <i class="fas fa-exchange-alt"></i></button>
                     <button title="New Lines" class="new-txt-line" onclick="handleNewTxtLine()">
                         <i class="fas fa-plus"></i></button>
-                        <a href="#" title="Download Meme" class="download-meme" onclick="onDownloadCanvas(this)" download="">
+                    <a href="#" title="Download Meme" class="download-meme" onclick="onDownloadCanvas(this)"
+                        download="">
                         Download</a>
-                        <button class="close-modal" onclick="closeModal()">Back</button>
+                    <button class="close-modal" onclick="closeModal()">Back</button>
                 </section>
         </section>
-        </div>
     </main>
 
 

@@ -3,6 +3,7 @@
 var gCanvas;
 var gCtx;
 var gCurrImg;
+var gEditing = false;
 
 
 function onInit() {
@@ -11,29 +12,23 @@ function onInit() {
 
     gCanvas = document.getElementById('meme-content')
     gCtx = gCanvas.getContext('2d')
-
 }
 
 function onOpenEditorModal(elImg) {
 
-    //TODO show modal and hide imgs(?)
     renderModalCanvas();
-    drawImg(elImg);
     gCurrImg = elImg
-    var txt = 'Start Typing'
-
-    updateCurrMeme(gCurrImg.id, 0, txt, 50, 'center', '#ffffff', '#000000',  'impact');
+    resizeImgandContaine()
+    updateCurrMeme(gCurrImg.id, 0, 'Start Typing', 40, 'center', '#ffffff', '#000000', 'impact');
     // Todo set to fit actual lines
     renderNewMeme()
 }
-
 
 // Editor Functions
 function onTextTyped() {
     if (event.keyCode === 40 || event.keyCode === 39 || event.keyCode === 38 || event.keyCode === 37) {
         // eventually this will be when you click on the text box
         setMemeCoords(event.keyCode)
-
     }
 
     var currtext = getTypedText()
@@ -48,7 +43,7 @@ function getTypedText() {
 }
 
 function onFontFamily() {
-    var elFontSelector = document.querySelector('.fonts')    
+    var elFontSelector = document.querySelector('.fonts')
     setFontFamily(elFontSelector.value)
     renderNewMeme()
 }
@@ -71,11 +66,11 @@ function handleFontSize(size) {
 }
 
 function onClearText() {
-    //TODO this needs to zero out everything
-    drawImg(gCurrImg)
-    gCtx.save()
+
     var elMemeTxt = document.querySelector('#meme-text')
     elMemeTxt.value = ''
+    setMemeTxt(elMemeTxt.value)
+    renderNewMeme()
 }
 
 function handleTxtDirection(direction) {
@@ -87,14 +82,14 @@ function handleTxtLineToggle() {
     setToggleTxtLine()
     var elMemeTxt = document.querySelector('#meme-text')
     var meme = getCurrMeme()
-    // debugger
     var text = meme.lines[meme.selectedLineIdx].txt
     elMemeTxt.value = text
 
 }
 
 function handleNewTxtLine() {
-    createNewLine()
+    var canvas = document.querySelector('.meme-content')
+    createNewLine(canvas.height, canvas.width)
     renderNewMeme()
 }
 
@@ -105,6 +100,7 @@ function onDownloadCanvas(elLink) {
 }
 
 function closeModal() {
+    gEditing = false;
     var modal = document.querySelector('.editor-modal-container')
     modal.style.display = 'none'
     var imgs = document.querySelector('.pre-editor-container')
@@ -115,6 +111,16 @@ function closeModal() {
 
 function drawImg(img) {
     gCtx.drawImage(img, 0, 0, gCanvas.width, gCanvas.height)
+}
+
+function resizeImgandContaine() {
+    var canvasContainer = document.querySelector('.canvas-container')
+    var scale = Math.min(canvasContainer.offsetWidth / gCurrImg.width, canvasContainer.offsetHeight / gCurrImg.height);
+    gCurrImg.width = gCurrImg.width * scale
+    gCurrImg.height = gCurrImg.height * scale
+    canvasContainer.style.width = `${gCurrImg.width}px`
+    canvasContainer.style.height = `${gCurrImg.height}px`
+    canvasContainer.style.alignSelf = 'center'
 }
 
 function drawText(text, color, bordColor, direction, size, fontFamily, x, y) {
@@ -128,9 +134,18 @@ function drawText(text, color, bordColor, direction, size, fontFamily, x, y) {
     gCtx.strokeText(text, x, y)
 }
 
+function setCanvasSize() {
+    gEditing = true;
+    var canvas = document.querySelector('.meme-content')
+    var canvasContainer = document.querySelector('.canvas-container')
+    canvas.width = canvasContainer.offsetWidth;
+    canvas.height = canvasContainer.offsetHeight;
+    setLineCoords(canvas.height, canvas.width)
+}
 
 // Rendering
 function renderNewMeme() {
+    if (!gEditing) setCanvasSize()
     var meme = getCurrMeme()
     drawImg(gCurrImg)
     meme.lines.map(line => {

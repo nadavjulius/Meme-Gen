@@ -29,6 +29,11 @@ a {
 
 /* Helpers */
 
+.logo {
+    height: 100%;
+    width: auto;
+}
+
 .grid {
     display: grid;
 }
@@ -51,28 +56,25 @@ a {
 /* Main CSS */
 
 .main-head {
-    height: 10vh;
-    background-color: rgb(37, 37, 37);
+    height: 20vh;
+    background-color: #495664;
     color: cornsilk;
     margin-bottom: 10px;
 }
 
 /* Meme Img Container */
 
-.pre-editor-container {
-    /* display: none; */
-}
-
 .meme-imgs-container {
     height: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 15px;
 }
 
 .meme-img {
     border: solid 2px black;
     border-radius: 5%;
+    
 }
 
 .meme-img:hover {
@@ -92,16 +94,16 @@ a {
     width: 100%;
 }
 
-.canvas-container {
-    padding: 2%;
-}
-
 .meme-content {
     border: solid 2px black;
 }
 
+.canvas-container {
+    width: 45%;
+}
+
 .editing-controls {
-    grid-template-rows: repeat(10, 1fr);
+    grid-template-rows: repeat(8, 1fr);
     grid-template-columns: repeat(9, 1fr);
     gap: 10px;
     width: 45%;
@@ -125,19 +127,27 @@ a {
 
 .txt-line-toggle {
     grid-row: 4 / 5;
-    grid-column: 4 / 5;
+    grid-column: 3 / 4;
     border-radius: 10%;
 }
 
-.new-txt-line {
+.fonts {
     grid-row: 4 / 5;
-    grid-column: 5 / 6;
+    grid-column: 4 / 7;
     border-radius: 10%;
+    text-align: center;
+    line-height: 3rem;
 }
 
 .clear-text {
     grid-row: 4 / 5;
-    grid-column: 6 / 7;
+    grid-column: 7 / 8;
+    border-radius: 10%;
+}
+
+.new-txt-line {
+    grid-row: 6 / 7;
+    grid-column: 5 / 6;
     border-radius: 10%;
 }
 
@@ -183,30 +193,22 @@ a {
     border-radius: 10%;
 }
 
-.fonts{
-    grid-row: 6 / 7;
-    grid-column: 5 / 6;
-    border-radius: 10%;
-    text-align: center;
-    line-height: 3rem;
-}
-
 .download-meme {
     grid-row: 7 / 8;
     grid-column: 6 / 8;
     border-radius: 10%;
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 3rem;
 }
 
 .download-meme:hover {
     color: rgb(2, 2, 87);
-    font-size: 1.55rem;
+    font-size: 1.35rem;
     transition: all 0.3s;
 }
 
-.close-modal{
+.close-modal {
     grid-row: 7 / 8;
     grid-column: 5 / 6;
     border-radius: 10%;
@@ -214,5 +216,101 @@ a {
     line-height: 3rem;
 }
 
+@media (max-width: 780px) {
+    .canvas-container {
+        width: 100%;
+        margin: auto;
+    }
+    .editing-controls {
+        width: 100%;
+    }
+}
 
-
+@media (max-width: 380px) {
+    .editing-controls {
+        grid-template-rows: repeat(8, 1fr);
+        grid-template-columns: repeat(7, 1fr);
+    }
+    #meme-text {
+        grid-row: 2 / 3;
+        grid-column: 2 / 7;
+        border-radius: 10px;
+    }
+    .txt-line-toggle {
+        grid-row: 3 / 4;
+        grid-column: 2 / 3;
+        border-radius: 10%;
+    }
+    .new-txt-line {
+        grid-row: 3 / 4;
+        grid-column: 3 / 4;
+        border-radius: 10%;
+    }
+    .clear-text {
+        grid-row: 3 / 4;
+        grid-column: 4 / 5;
+        border-radius: 10%;
+    }
+    .text-size-down {
+        grid-row: 3 / 4;
+        grid-column: 5 / 6;
+        border-radius: 10%;
+    }
+    .text-size-up {
+        grid-row: 3 / 4;
+        grid-column: 6 / 7;
+        border-radius: 10%;
+    }
+    .txt-direction-right {
+        grid-row: 4 / 5;
+        grid-column: 3 / 4;
+        border-radius: 10%;
+    }
+    .txt-direction-center {
+        grid-row: 4 / 5;
+        grid-column: 4 / 5;
+        border-radius: 10%;
+    }
+    .txt-direction-left {
+        grid-row: 4 / 5;
+        grid-column: 5 / 6;
+        border-radius: 10%;
+    }
+    #txt-bord-color {
+        grid-row: 4 / 5;
+        grid-column: 6 / 7;
+        border-radius: 10%;
+    }
+    #txt-color {
+        grid-row: 4 / 5;
+        grid-column: 2 / 3;
+        border-radius: 10%;
+    }
+    .fonts {
+        grid-row: 6 / 7;
+        grid-column: 2 / 4;
+        border-radius: 10%;
+        text-align: center;
+        line-height: 3rem;
+    }
+    .download-meme {
+        grid-row: 6 / 7;
+        grid-column: 4 / 6;
+        border-radius: 10%;
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 3rem;
+    }
+    .download-meme:hover {
+        color: rgb(2, 2, 87);
+        font-size: 1.35rem;
+        transition: all 0.3s;
+    }
+    .close-modal {
+        grid-row: 6 / 7;
+        grid-column: 6 / 8;
+        border-radius: 10%;
+        text-align: center;
+        line-height: 3rem;
+    }
+}
