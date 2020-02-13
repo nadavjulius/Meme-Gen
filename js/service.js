@@ -5,21 +5,28 @@ var gMeme;
 
 
 
-// Getting and Setting things
+function setImgsForDisplay() {
+    gImgs = _createImgs()
+}
 
+// This function moves the text with arrow keys - bad function name
 function setMemeCoords(evKeycode) {
     switch (evKeycode) {
         case 37:
             gMeme.lines[gMeme.selectedLineIdx].coords.x = gMeme.lines[gMeme.selectedLineIdx].coords.x - 5
+            updateTextOutline('x', - 5)
             break;
         case 38:
             gMeme.lines[gMeme.selectedLineIdx].coords.y = gMeme.lines[gMeme.selectedLineIdx].coords.y - 5
+            updateTextOutline('y', - 5)
             break;
         case 39:
             gMeme.lines[gMeme.selectedLineIdx].coords.x = gMeme.lines[gMeme.selectedLineIdx].coords.x + 5
+            updateTextOutline('x', + 5)
             break;
         case 40:
             gMeme.lines[gMeme.selectedLineIdx].coords.y = gMeme.lines[gMeme.selectedLineIdx].coords.y + 5
+            updateTextOutline('y', + 5)
             break;
     }
 }
@@ -29,12 +36,12 @@ function setLineCoords(height, width) {
     gMeme.lines[0].coords.x = width - (width / 2)
     gMeme.lines[1].coords.y = height - 50
     gMeme.lines[1].coords.x = width - (width / 2)
-    resizeText(height, width)
+    resizeText(width)
 }
 
-function resizeText(width){
-    gMeme.lines[0].size = width /10
-    gMeme.lines[1].size = width /10
+function resizeText(width) {
+    gMeme.lines[0].size = width / 10
+    gMeme.lines[1].size = width / 10
 }
 
 function setFontFamily(newFont) {
@@ -42,6 +49,10 @@ function setFontFamily(newFont) {
     gMeme.lines.map(line => {
         line.fontFamily = newFont
     })
+}
+
+function setSelectedTxt(newSelection){
+    gMeme.selectedLineIdx = newSelection
 }
 
 function setToggleTxtLine() {
@@ -54,7 +65,6 @@ function setTxtDirection(direction) {
 }
 
 function setFontSize(sizeDirection) {
-    // debugger
     gMeme.lines[gMeme.selectedLineIdx].size = gMeme.lines[gMeme.selectedLineIdx].size + sizeDirection
 }
 
@@ -71,16 +81,16 @@ function setMemeTxt(txt) {
 }
 
 
-function setImgsForDisplay() {
-    gImgs = _createImgs()
-}
-
 function getCurrMeme() {
     return gMeme;
 }
 
 function getImgsForDisplay() {
     return gImgs;
+}
+
+function addNewLine(newLine) {
+    gMeme.lines.push(newLine)
 }
 
 // Creating things | Playing god
@@ -94,19 +104,15 @@ function createNewLine(height, width) {
         color: '#ffffff',
         bordColor: '#000000',
         coords: {
-            y: height/2,
-            x: width/2
+            y: height / 2,
+            x: width / 2
         }
     }
     addNewLine(newLine)
 }
 
-function addNewLine(newLine) {
-    gMeme.lines.push(newLine)
-}
-
-// this creates teh initial gmemes - bad function name
-function updateCurrMeme(id, lineIdx, txt, size, align, color, bordColor, fontFamily) {
+// this creates the initial gMemes - bad function name
+function genCurrMeme(id, lineIdx, txt, size, align, color, bordColor, fontFamily) {
     gMeme = {
         selectedImgId: id,
         selectedLineIdx: lineIdx,
@@ -151,22 +157,22 @@ function _createImgs() {
     // TODO add storage
     // needs to be like this for keywords
     var imgs = [
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/1.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/2.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/3.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/4.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/5.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/6.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/7.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/8.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/9.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/10.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/11.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/12.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/13.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/14.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/15.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
-        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/16.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/1.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'songs, music' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/2.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'money, boss, trump' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/3.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'puppys, dogs, cute' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/4.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'puppys, dogs, cute, baby' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/5.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'baby, fuck yes' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/6.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'cat, sleeping, funny' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/7.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'no way, tell me more' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/8.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'evil' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/9.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'you, finger' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/10.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'what, WHAT, ?' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/11.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'alines' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/12.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'billion $' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/13.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'dancing, funny' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/14.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'money, boss, trump, obama' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/15.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'cute, baby' },
+        { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/16.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'puppys, dogs, cute, funny' },
         { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/17.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
         { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/18.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
         { url: `<img id="${parseInt(Math.random() * 1000)}" class="meme-img" src="img/meme-imgs/19.jpg" onclick="onOpenEditorModal(this)" alt="oops! img failed to load">`, keywords: 'undefined' },
