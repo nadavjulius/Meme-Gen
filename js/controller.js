@@ -39,22 +39,16 @@ function updateTextOutline(coord, diff) {
     }
 }
 
-// TODO make imges also show up on backspace
-// TODO identify when input is empty (?)
-// TODO remove setimout
 function searchInMemes(){
     var displayedImgs = getImgsForDisplay()
     displayedImgs.forEach(img => {
-        var typedTxt = document.querySelector('.main-search-bar')
-        // debugger  
-        if(!img.keywords.includes(typedTxt.value)) {
-            var imgc = document.getElementById(img.id)
+        var typedTxt = document.querySelector('.main-search-bar').value
+        var imgc = document.getElementById(img.id)
+        if(!img.keywords.includes(typedTxt)) {
             imgc.style.display = "none"
-            setTimeout(() => {
-                imgc.style.display = "block"
-                
-            }, 5000);
-        } 
+        } else {
+            imgc.style.display = "block"
+        }
         
     });
     
@@ -154,8 +148,10 @@ function selectCtx(ev) {
     var pos = getMousePos(ev)
     gMemeTxts.map(line => {
         // TODO make more accurite its like 70% at best
-        if (pos.x >= line.x && pos.x <= line.x + line.textLength &&
-            pos.y * 1.5 >= line.y && pos.y <= line.y + line.txtHeight) {                
+        debugger
+        
+        if ((pos.x * .5) >= line.x && pos.x <= (line.x + line.textLength) &&
+            (pos.y * 1.5) >= line.y && pos.y <= (line.y + line.txtHeight)) {                
             setSelectedTxt(line.selectedLineIdx)
         }
     })
